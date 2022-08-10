@@ -4,7 +4,7 @@ Version: 1.0
 Autor: z.cejay@gmail.com
 Date: 2022-06-22 16:15:42
 LastEditors: cejay
-LastEditTime: 2022-08-09 22:18:06
+LastEditTime: 2022-08-10 09:19:34
 '''
 
 import json
@@ -45,9 +45,9 @@ def readExcel(fileName: str, sheetName: str = 'Sheet2', ignoreRow: int = 2):
             dao = {
                 'title': row[0].value,
                 'tag': row[1].value,
-                'image': row[2].value,
+                'image': 'https://dao.hidev.cn/storage/images/'+row[2].value,
                 'summary': row[3].value,
-                'logo': row[4].value,
+                'logo': 'https://dao.hidev.cn/storage/images/'+row[4].value,
                 'name': row[5].value,
                 'website': row[6].value,
                 'twitter': row[7].value,
@@ -67,13 +67,15 @@ def readExcel(fileName: str, sheetName: str = 'Sheet2', ignoreRow: int = 2):
                 'Reviewer': row[31].value,
             }
             for i in range(0, 5):
-                dao['contributorsArr'].append({
-                    'key_pic': 'https://dao.hidev.cn/storage/images/' + row[12+i*2].value,
-                    'key_contributors_name': list[i+1][12+i*2].value,
-                    'key_contributors_job': list[i+2][12+i*2].value,
-                    'key_contributors_intro': list[i+3][12+i*2].value,
-                    'key_contributors_url': list[i+4][12+i*2].value,
-                })
+                _img = row[12+i*2].value
+                if _img is not None:
+                    dao['contributorsArr'].append({
+                        'key_pic': 'https://dao.hidev.cn/storage/images/' + row[12+i*2].value,
+                        'key_contributors_name': list[i+1][12+i*2].value,
+                        'key_contributors_job': list[i+2][12+i*2].value,
+                        'key_contributors_intro': list[i+3][12+i*2].value,
+                        'key_contributors_url': list[i+4][12+i*2].value,
+                    })
             dao['contributors'] = json.dumps(dao['contributorsArr'])
             data.append(dao)
 
